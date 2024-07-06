@@ -1,44 +1,55 @@
 {% extends 'layout.html' %}
 
-{% block body%}
+{% block body %}
 <div class="row">
     <div class="col-md-5">
+        <!-- Bloque para mostrar mensajes flash -->
         {% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-{% endfor %}
-{% endif %}
-{% endwith %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
+        <!-- Formulario para agregar un nuevo contacto -->
         <div class="card card-body">
             <form action="/agregarContacto" method="POST">
+                <!-- Campo para el nombre -->
                 <div class="form-group">
                     <input type="text" name="nombre" placeholder="Nombre" class="form-control">
                 </div>
                 
+                <!-- Campo para el apellido -->
                 <div class="form-group">
                     <input type="text" name="apellido" placeholder="Apellido" class="form-control">
                 </div>
+
+                <!-- Campo para el teléfono -->
                 <div class="form-group">
                     <input type="text" name="telefono" placeholder="Telefono" class="form-control">
                 </div>
+
+                <!-- Campo para el correo -->
                 <div class="form-group">
                     <input type="text" name="correo" placeholder="Correo" class="form-control">
                 </div>
                 
+                <!-- Botón para enviar el formulario -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Agregar Contactos</button>
                 </div>
             </form>
         </div>
     </div>
+
     <div class="col-md-7">
+        <!-- Tabla para mostrar los contactos existentes -->
         <table class="table table-striped table-bordered bg-white table-sm">
             <thead>
                 <tr>
@@ -50,24 +61,28 @@
                 </tr>
             </thead>
             <tbody>
-                {% for contact in contacts%}
-                <tr>
-                    <td>{{ contact.1}}</td>
-                    <td>{{ contact.2}}</td>
-                    <td>{{ contact.3}}</td>
-                    <td>{{ contact.4}}</td>
-                    <td>
-                        <a href="/EditarContactos/{{ contact.0 }}" class="btn btn-secondary">Editar</a>
-                        <a href="/eliminarContacto/{{ contact.0 }}" class="btn btn-danger btn-delete">Eliminar</a>
-        
-                    </td>
-                </tr>
+                <!-- Bucle para iterar sobre los contactos y mostrarlos en la tabla -->
+                {% for contact in contacts %}
+                    <tr>
+                        <!-- Mostrar nombre del contacto -->
+                        <td>{{ contact.1 }}</td>
+                        <!-- Mostrar apellido del contacto -->
+                        <td>{{ contact.2 }}</td>
+                        <!-- Mostrar teléfono del contacto -->
+                        <td>{{ contact.3 }}</td>
+                        <!-- Mostrar correo del contacto -->
+                        <td>{{ contact.4 }}</td>
+                        <td>
+                            <!-- Enlace para editar el contacto -->
+                            <a href="/EditarContactos/{{ contact.0 }}" class="btn btn-secondary">Editar</a>
+                            <!-- Enlace para eliminar el contacto -->
+                            <a href="/eliminarContacto/{{ contact.0 }}" class="btn btn-danger btn-delete">Eliminar</a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
-
 
 {% endblock %}
